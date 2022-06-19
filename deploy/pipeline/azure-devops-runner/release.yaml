@@ -18,7 +18,7 @@ spec:
       retries: 3
   values:
     pipelines:
-      url: "https://dev.azure.com/cronjevh/GitOps"
+      url: "https://dev.azure.com/cronjevh"
       pat:
         secretRef: 
           name: azure-devops-pat
