@@ -8,7 +8,7 @@ spec:
   dependsOn:
   - name: infrastructure
   interval: 1m0s
-  path: ./deploy/pipeline
+  path: ./deploy/pipeline/azure-devops-runner
   prune: true
   sourceRef:
     kind: GitRepository
