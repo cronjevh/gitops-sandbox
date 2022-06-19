@@ -19,4 +19,7 @@ spec:
   # Default values
   # https://github.com/stefanprodan/podinfo/blob/master/charts/podinfo/values.yaml
   values:
-    pipelines.url: 
+    pipelines:
+      url: "https://dev.azure.com/cronjevh/GitOps"
+      pat:
+        secretRef: azure-devops-pat
