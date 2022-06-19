@@ -20,4 +20,6 @@ spec:
     pipelines:
       url: "https://dev.azure.com/cronjevh/GitOps"
       pat:
-        secretRef: azure-devops-pat
+        secretRef: 
+          name: azure-devops-pat
+          key: pat
