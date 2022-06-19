@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: azure-devops-runner
+  namespace: azure-devops-runner
+spec:
+  releaseName: azure-devops-runner
+  chart:
+    spec:
+      chart: azure-pipelines-agent
+      sourceRef:
+        kind: HelmRepository
+        name: emberstack
+        namespace: flux-system
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  # Default values
+  # https://github.com/stefanprodan/podinfo/blob/master/charts/podinfo/values.yaml
+  values:
+    pipelines.url: 
