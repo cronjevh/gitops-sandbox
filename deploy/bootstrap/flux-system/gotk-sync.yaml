@@ -8,10 +8,10 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: cronjevh4418
+    branch: master
   secretRef:
     name: flux-system
-  url: https://github.com/kubernetes101/gitopsdays
+  url: https://github.com/cronjevh/gitops-sandbox
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
