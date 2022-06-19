@@ -304,3 +304,4 @@ dist
 .DS_Store
 
 .env
+.decrypted~*
