@@ -25,3 +25,8 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
+      hosts:
+        - host: host.docker.internal:30396
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
