@@ -28,5 +28,5 @@ spec:
       hosts:
         - host: host.docker.internal
           paths:
-            - path: /
+            - path: /podinfo/(.*)
               pathType: ImplementationSpecific
