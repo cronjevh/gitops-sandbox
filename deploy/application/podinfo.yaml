@@ -29,4 +29,10 @@ spec:
         - host: host.docker.internal
           paths:
             - path: /podinfo/(.*)
-              pathType: ImplementationSpecific
+              pathType: Prefix
+              backend:
+                service:
+                  name: podinfo
+                  port:
+                    number: 9898
+              
