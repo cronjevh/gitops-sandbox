@@ -7,6 +7,8 @@ spec:
   interval: 1m
   approvePlan: "auto"
   path: ./deploy/terraform/azure
+  writeOutputsToSecret:
+    name: helloworld-output
   sourceRef:
     kind: GitRepository
     name: flux-system
