@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tf-controller
+  namespace: flux-system
+spec:
+  targetNamespace: flux-system
+  releaseName: tf-controller
+  chart:
+    spec:
+      chart: tf-controller
+      sourceRef:
+        kind: HelmRepository
+        name: tf-controller
+        namespace: flux-system
+  interval: 1h0m0s
