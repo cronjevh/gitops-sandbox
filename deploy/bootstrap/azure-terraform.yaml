@@ -1,14 +1,14 @@
-apiVersion: infra.contrib.fluxcd.io/v1alpha1
-kind: Terraform
-metadata:
-  name: azure
-  namespace: flux-system
-spec:
-  interval: 1m
-  approvePlan: "auto"
-  path: ./deploy/terraform/azure
-  writeOutputsToSecret:
-    name: helloworld-output
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
+# apiVersion: infra.contrib.fluxcd.io/v1alpha1
+# kind: Terraform
+# metadata:
+#   name: azure
+#   namespace: flux-system
+# spec:
+#   interval: 1m
+#   approvePlan: "auto"
+#   path: ./deploy/terraform/azure
+#   writeOutputsToSecret:
+#     name: helloworld-output
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
