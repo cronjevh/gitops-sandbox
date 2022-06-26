@@ -20,10 +20,10 @@ spec:
     pipelines:
       url: "https://dev.azure.com/cronjevh"
       pat:
-        secretRef: 
+        secretRef:
           name: azure-devops-pat
           key: pat
     image:
       repository: ghcr.io/cronjevh/azure-devops-runner
       pullPolicy: IfNotPresent
-      tag: "0.0.1" # {"$imagepolicy": "flux-system:azure-devops-runner:tag"}
+      tag: "0.0.2" # {"$imagepolicy": "flux-system:azure-devops-runner:tag"}
