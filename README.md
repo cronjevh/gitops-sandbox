@@ -220,6 +220,7 @@ Although Flux has already been installed in the cluster, we can use `flux bootst
 ```bash
 flux bootstrap git \
   --url "https://github.com/${organization}/${repository}" \
+  --components-extra=image-reflector-controller,image-automation-controller \
   --branch $BRANCH \
   --token-auth \
   --password ${GITHUB_TOKEN} \
