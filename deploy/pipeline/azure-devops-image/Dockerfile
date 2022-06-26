@@ -67,6 +67,8 @@ RUN wget --quiet https://github.com/weaveworks/tf-controller/releases/download/v
 RUN wget --quiet https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64 && \
     mv sops-v3.7.3.linux.amd64 /usr/local/bin/sops && chmod +x /usr/local/bin/sops
 
+RUN curl -s https://get.docker.com/ | bash
+
 WORKDIR /azp
 
 COPY ./start.sh .

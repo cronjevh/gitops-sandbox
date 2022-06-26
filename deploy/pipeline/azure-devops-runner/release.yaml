@@ -27,3 +27,10 @@ spec:
       repository: ghcr.io/cronjevh/azure-devops-runner
       pullPolicy: IfNotPresent
       tag: "0.0.2" # {"$imagepolicy": "flux-system:azure-devops-runner:tag"}
+    extraVolumes:
+    - name: dockersock
+      hostPath:
+        path: /var/run/docker.sock
+    extraVolumeMounts:
+    - name: dockersock
+      mountPath: "/var/run/docker.sock"
