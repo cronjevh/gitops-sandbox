@@ -28,7 +28,7 @@ spec:
     image:
       repository: ghcr.io/cronjevh/azure-devops-runner
       pullPolicy: IfNotPresent
-      tag: "0.0.3" # {"$imagepolicy": "flux-system:azure-devops-runner:tag"}
+      tag: "0.0.4" # {"$imagepolicy": "flux-system:azure-devops-runner:tag"}
     extraVolumes:
     - name: dockersock
       hostPath:
