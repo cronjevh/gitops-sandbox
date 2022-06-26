@@ -2,7 +2,7 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
 metadata:
-  name: podinfo
+  name: azure-devop-runner
   namespace: flux-system
 spec:
   image: ghcr.io/cronjevh/azure-devops-runner
