@@ -24,5 +24,6 @@ spec:
           name: azure-devops-pat
           key: pat
     image:
-      repository: ghcr.io/cronjevh/azure-devops-runner:0.0.1 # {"$imagepolicy": "flux-system:azure-devops-runner"}
+      repository: ghcr.io/cronjevh/azure-devops-runner
       pullPolicy: IfNotPresent
+      tag: "0.0.1" # {"$imagepolicy": "flux-system:azure-devops-runner:tag"}
