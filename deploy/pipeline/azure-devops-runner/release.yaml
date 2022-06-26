@@ -23,6 +23,8 @@ spec:
         secretRef:
           name: azure-devops-pat
           key: pat
+      agent:
+        mountDocker: false
     image:
       repository: ghcr.io/cronjevh/azure-devops-runner
       pullPolicy: IfNotPresent
@@ -34,3 +36,5 @@ spec:
     extraVolumeMounts:
     - name: dockersock
       mountPath: "/var/run/docker.sock"
+    serviceAccount:
+      clusterAdmin: true
