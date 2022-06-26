@@ -67,7 +67,11 @@ RUN wget --quiet https://github.com/weaveworks/tf-controller/releases/download/v
 RUN wget --quiet https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64 && \
     mv sops-v3.7.3.linux.amd64 /usr/local/bin/sops && chmod +x /usr/local/bin/sops
 
+# Install Docker for docker-in-docker operations
 RUN curl -s https://get.docker.com/ | bash
+
+# Install K3d.io that will allow running a mini cluster
+RUN curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v5.4.3 bash
 
 WORKDIR /azp
 
