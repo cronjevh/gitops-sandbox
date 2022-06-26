@@ -1,10 +1,13 @@
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
-kind: ImageRepository
+kind: ImagePolicy
 metadata:
   name: azure-devops-runner
   namespace: flux-system
 spec:
-  image: ghcr.io/cronjevh/azure-devops-runner
-  interval: 1m0s
+  imageRepositoryRef:
+    name: azure-devops-runner
+  policy:
+    semver:
+      range: x.x.x
 
