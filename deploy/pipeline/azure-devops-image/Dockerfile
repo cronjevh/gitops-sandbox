@@ -1,35 +1,40 @@
 FROM ubuntu:18.04
 
+ARG Powershell_Version=7.0.10\*
+ARG Terraform_Version=1.1.3
+ARG Azure_Powershell_Version=4.5.0
+ARG Kubectl_Version=1.24.2-00
+ARG Helm_Version=v3.9.0
+
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
-ENV DEBIAN_FRONTEND=noninteractive
-RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
-
-RUN apt-get update \
-&& apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        jq \
-        git \
-        iputils-ping \
-        libcurl4 \
-        libicu60 \
-        libunwind8 \
-        netcat \
-        libssl1.0 \
-		zip \
-		unzip \
-&& rm -rf /var/lib/apt/lists/*
-
-RUN apt update \
-    && apt install -y ca-certificates openssh-client \
-    wget curl iptables supervisor \
-    && rm -rf /var/lib/apt/list/*
-
-ENV DOCKER_CHANNEL=stable \
+ENV DEBIAN_FRONTEND=noninteractive \
+    DOCKER_CHANNEL=stable \
 	DOCKER_VERSION=20.10.9 \
 	DOCKER_COMPOSE_VERSION=1.29.2 \
 	DEBUG=false
+
+RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
+
+RUN apt-get update \
+    && apt-get install -y \
+            ca-certificates \
+            openssh-client \
+            curl \
+            jq \
+            git \
+            iputils-ping \
+            libcurl4 \
+            libicu60 \
+            libunwind8 \
+            netcat \
+            libssl1.0 \
+            zip \
+            unzip \
+            iptables \
+            supervisor \
+            wget \
+    && rm -rf /var/lib/apt/lists/*
 
 # Docker installation
 RUN set -eux; \
@@ -68,12 +73,6 @@ COPY logger.sh /opt/bash-utils/logger.sh
 
 RUN chmod +x /usr/local/bin/modprobe
 VOLUME /var/lib/docker
-
-ARG Powershell_Version=7.0.10\*
-ARG Terraform_Version=1.1.3
-ARG Azure_Powershell_Version=4.5.0
-ARG Kubectl_Version=1.24.2-00
-ARG Helm_Version=v3.9.0
 
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
@@ -121,12 +120,11 @@ RUN curl -s https://get.docker.com/ | bash
 # Install K3d.io that will allow running a mini cluster
 RUN curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v5.4.3 bash
 
+# RUN kubectl get pods --all-namespaces
+
 WORKDIR /azp
 
 COPY ./start.sh .
 RUN chmod +x start.sh
 
-# CMD ["./start.sh"]
-
-ENTRYPOINT ["./start.sh"]
-CMD ["sh"]
+CMD ["./start.sh"]

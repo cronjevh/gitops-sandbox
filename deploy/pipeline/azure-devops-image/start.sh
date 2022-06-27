@@ -50,8 +50,8 @@ else
 fi
 
 if [ -z "$AZP_URL" ]; then
-  echo 1>&2 "error: missing AZP_URL environment variable"
-  exit 1
+  echo "No Azure DevOps URL defined - assuming local run"
+  exit 0
 fi
 
 if [ -z "$AZP_TOKEN_FILE" ]; then
@@ -70,8 +70,6 @@ if [ -n "$AZP_WORK" ]; then
   mkdir -p "$AZP_WORK"
 fi
 
-
-
 echo "Setup - Determining matching Azure Pipelines agent..."
 AZP_AGENT_RESPONSE=$(curl -LsS \
   -u user:$(cat "$AZP_TOKEN_FILE") \
@@ -89,9 +87,6 @@ echo "Setup - Latest agent package will be downloaded from $AZP_AGENTPACKAGE_URL
 echo "Setup - Downloading and unpacking Azure Pipelines agent..."
 curl -LsS $AZP_AGENTPACKAGE_URL | tar -xz & wait $!
 echo "Setup - Completed download and unpack"
-
-
-
 
 export AGENT_ALLOW_RUNASROOT="1"
 

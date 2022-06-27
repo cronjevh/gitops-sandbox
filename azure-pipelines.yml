@@ -1,7 +1,7 @@
 resources:
   containers:
   - container: custom
-    image: ghcr.io/cronjevh/azure-devops-runner:0.0.5
+    image: ghcr.io/cronjevh/azure-devops-runner:0.0.9
 
 container: custom
 
@@ -15,4 +15,6 @@ steps:
 - script: |
     echo Seeing if Docker is available
     docker ps
+    k3d cluster start
+    kubectl get pods --all-namespace
   displayName: 'Run a multi-line script'
