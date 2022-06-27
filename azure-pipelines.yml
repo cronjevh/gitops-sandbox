@@ -17,11 +17,11 @@ steps:
     docker ps
     k3d cluster create
     kubectl get pods --all-namespaces
-    flux bootstrap git \
-    --url "https://github.com/cronjevh/gitops-sandbox" \
-    --components-extra=image-reflector-controller,image-automation-controller \
-    --branch $BRANCH \
-    --token-auth \
-    --password ${GITHUB_TOKEN} \
-    --path "/deploy/bootstrap"
+    # flux bootstrap git \
+    # --url "https://github.com/cronjevh/gitops-sandbox" \
+    # --components-extra=image-reflector-controller,image-automation-controller \
+    # --branch $BRANCH \
+    # --token-auth \
+    # --password ${GITHUB_TOKEN} \
+    # --path "/deploy/bootstrap"
   displayName: 'Run a multi-line script'
