@@ -1,11 +1,5 @@
 FROM ubuntu:18.04
 
-ARG Powershell_Version=7.0.10\*
-ARG Terraform_Version=1.1.3
-ARG Azure_Powershell_Version=4.5.0
-ARG Kubectl_Version=1.24.2-00
-ARG Helm_Version=v3.9.0
-
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -26,6 +20,60 @@ RUN apt-get update \
 		zip \
 		unzip \
 && rm -rf /var/lib/apt/lists/*
+
+RUN apt update \
+    && apt install -y ca-certificates openssh-client \
+    wget curl iptables supervisor \
+    && rm -rf /var/lib/apt/list/*
+
+ENV DOCKER_CHANNEL=stable \
+	DOCKER_VERSION=20.10.9 \
+	DOCKER_COMPOSE_VERSION=1.29.2 \
+	DEBUG=false
+
+# Docker installation
+RUN set -eux; \
+	\
+	arch="$(uname --m)"; \
+	case "$arch" in \
+        # amd64
+		x86_64) dockerArch='x86_64' ;; \
+        # arm32v6
+		armhf) dockerArch='armel' ;; \
+        # arm32v7
+		armv7) dockerArch='armhf' ;; \
+        # arm64v8
+		aarch64) dockerArch='aarch64' ;; \
+		*) echo >&2 "error: unsupported architecture ($arch)"; exit 1 ;;\
+	esac; \
+	\
+	if ! wget -O docker.tgz "https://download.docker.com/linux/static/${DOCKER_CHANNEL}/${dockerArch}/docker-${DOCKER_VERSION}.tgz"; then \
+		echo >&2 "error: failed to download 'docker-${DOCKER_VERSION}' from '${DOCKER_CHANNEL}' for '${dockerArch}'"; \
+		exit 1; \
+	fi; \
+	\
+	tar --extract \
+		--file docker.tgz \
+		--strip-components 1 \
+		--directory /usr/local/bin/ \
+	; \
+	rm docker.tgz; \
+	\
+	dockerd --version; \
+	docker --version
+
+COPY modprobe /usr/local/bin/
+COPY supervisor/ /etc/supervisor/conf.d/
+COPY logger.sh /opt/bash-utils/logger.sh
+
+RUN chmod +x /usr/local/bin/modprobe
+VOLUME /var/lib/docker
+
+ARG Powershell_Version=7.0.10\*
+ARG Terraform_Version=1.1.3
+ARG Azure_Powershell_Version=4.5.0
+ARG Kubectl_Version=1.24.2-00
+ARG Helm_Version=v3.9.0
 
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
@@ -53,7 +101,7 @@ RUN wget --quiet -O - https://raw.githubusercontent.com/kubernetes/helm/master/s
 
 # Get AZ Powershell core modules
 # https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-3.6.1
-RUN pwsh -c 'Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion "'${Azure_Powershell_Version}'"'
+# RUN pwsh -c 'Install-Module -Force -Name Az -AllowClobber -Scope AllUsers -MaximumVersion "'${Azure_Powershell_Version}'"'
 
 # Install Flux CLI https://fluxcd.io/docs/installation/
 RUN curl -s https://fluxcd.io/install.sh | bash
@@ -78,4 +126,7 @@ WORKDIR /azp
 COPY ./start.sh .
 RUN chmod +x start.sh
 
-CMD ["./start.sh"]
+# CMD ["./start.sh"]
+
+ENTRYPOINT ["./start.sh"]
+CMD ["sh"]

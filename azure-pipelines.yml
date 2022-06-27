@@ -1,7 +1,7 @@
 resources:
   containers:
   - container: custom
-    image: ghcr.io/cronjevh/azure-devops-runner:0.0.4
+    image: ghcr.io/cronjevh/azure-devops-runner:0.0.5
 
 container: custom
 
@@ -13,11 +13,6 @@ pool: 'Azure Pipelines'
 steps:
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    echo Seeing if Docker is available
+    docker ps
   displayName: 'Run a multi-line script'
-
-- task: Docker@2
-  inputs:
-    command: 'build'
-    Dockerfile: 'deploy/pipeline/azure-devops-image/Dockerfile'
