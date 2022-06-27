@@ -16,7 +16,7 @@ steps:
     echo Seeing if Docker is available
     k3d cluster create
     k3d kubeconfig show --all
-    sleep 1
+    sleep 30
     docker ps --all
     kubectl get pods --all-namespaces
     # flux bootstrap git \
