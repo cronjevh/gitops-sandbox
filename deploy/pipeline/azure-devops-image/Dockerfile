@@ -16,6 +16,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
 
+# Updates and apt dependencies
+# https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
 RUN apt-get update \
     && apt-get install -y \
             ca-certificates \
@@ -34,6 +36,8 @@ RUN apt-get update \
             iptables \
             supervisor \
             wget \
+            apt-utils \
+            software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
 # Docker installation
@@ -77,17 +81,13 @@ VOLUME /var/lib/docker
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
 
-# get `wget` & software-properties-common
-# https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7#ubuntu-1804
-RUN apt-get update && \
-    apt-get install -y wget unzip apt-utils curl software-properties-common
-
 # get powershell for 18.04 - Gotta have pwsh ...
 RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     apt-get update && \
     add-apt-repository universe && \
-    apt-get install -y powershell=${Powershell_Version}
+    apt-get install -y powershell=${Powershell_Version} \
+    && rm -rf /var/lib/apt/lists/*
 
 # Get Kubectl
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management
