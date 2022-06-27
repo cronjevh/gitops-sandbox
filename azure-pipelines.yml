@@ -14,10 +14,10 @@ steps:
 
 - script: |
     echo Seeing if Docker is available
-    docker ps
     k3d cluster create
     k3d kubeconfig show --all
     sleep 1
+    docker ps --all
     kubectl get pods --all-namespaces
     # flux bootstrap git \
     # --url "https://github.com/cronjevh/gitops-sandbox" \
